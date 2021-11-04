@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
 
 int main()
 {
@@ -9,14 +10,15 @@ int main()
 
     InitWindow(windowWidth, windowHeight, "Classy Clash");
 
-    Texture2D map = LoadTexture("nature_tileset/worldmap.png");
+    Texture2D map = LoadTexture("nature_tileset/RPG Nature Tileset.png");
     Vector2 mapPos{};
     const float mapScale{4.0f};
 
-    //instance of knight
-    Character knight;
-    knight.setScreenPos(windowWidth, windowHeight);
-    
+    //instance of knight with braced initialization!
+    Character knight{windowWidth, windowHeight};
+
+    //instance of prop
+    Prop rock{Vector2{}, LoadTexture("nature_tileset/Rock.png")};
 
     //Game loop
     SetTargetFPS(60);
@@ -30,6 +32,10 @@ int main()
 
         //draw map
         DrawTextureEx(map, mapPos, 0.0f, mapScale, WHITE);
+        
+        //draw prop
+        rock.Render(knight.getWorldPos());
+
         //update knight
         knight.tick(GetFrameTime());
         //check map bounds
@@ -41,6 +47,7 @@ int main()
         {
             knight.undoMovement();
         }
+       
 
         EndDrawing();
     }
