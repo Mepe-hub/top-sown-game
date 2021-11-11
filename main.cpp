@@ -21,7 +21,7 @@ int main()
    
     Prop props[2]{
         Prop {Vector2{600.0f, 300.0f}, LoadTexture("nature_tileset/Rock.png")},
-        Prop {Vector2{400.0f, 200.0f}, LoadTexture("nature_tileset/Log.png")}
+        Prop {Vector2{400.0f, 700.0f}, LoadTexture("nature_tileset/Log.png")}
     };
     //Game loop
     SetTargetFPS(60);
@@ -54,7 +54,14 @@ int main()
         {
             knight.undoMovement();
         }
-       
+        for(auto prop : props)
+        {
+            if(CheckCollisionRecs(knight.getCollisionRec(), prop.getCollisionRec(knight.getWorldPos())))
+            {
+                knight.undoMovement();
+            };
+           
+        }
 
         EndDrawing();
     }
