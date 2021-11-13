@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -17,8 +18,12 @@ int main()
     //instance of knight with braced initialization!
     Character knight{windowWidth, windowHeight};
 
+    //instance of enemy
+    Enemy goblin    {Vector2{}, 
+                    LoadTexture("characters/goblin_idle_spritesheet.png"), 
+                    LoadTexture("characters/goblin_run_spritesheet.png")};
+
     //instance of prop
-   
     Prop props[2]{
         Prop {Vector2{600.0f, 300.0f}, LoadTexture("nature_tileset/Rock.png")},
         Prop {Vector2{400.0f, 700.0f}, LoadTexture("nature_tileset/Log.png")}
@@ -62,6 +67,8 @@ int main()
             };
            
         }
+        //update goblin
+        goblin.tick(GetFrameTime());
 
         EndDrawing();
     }
