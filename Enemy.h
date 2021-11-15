@@ -13,8 +13,8 @@ public:
         target = character; 
     }
     virtual Vector2 getScreenPos() override;
-    
+
 private:
     Character* target;
-    
+    float damagePerSec{10.0f};
 };
