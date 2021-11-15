@@ -22,6 +22,7 @@ int main()
     Enemy goblin    {Vector2{}, 
                     LoadTexture("characters/goblin_idle_spritesheet.png"), 
                     LoadTexture("characters/goblin_run_spritesheet.png")};
+    goblin.setTarget(&knight);
 
     //instance of prop
     Prop props[2]{
@@ -50,6 +51,10 @@ int main()
 
         //update knight
         knight.tick(GetFrameTime());
+        
+        //update goblin
+        goblin.tick(GetFrameTime());
+        
         //check map bounds
         if(knight.getWorldPos().x < 0.0f 
             || knight.getWorldPos().y < 0.0f 
@@ -65,10 +70,13 @@ int main()
             {
                 knight.undoMovement();
             };
+             if(CheckCollisionRecs(goblin.getCollisionRec(), prop.getCollisionRec(knight.getWorldPos())))
+            {
+                goblin.undoMovement();
+            };
            
         }
-        //update goblin
-        goblin.tick(GetFrameTime());
+        
 
         EndDrawing();
     }

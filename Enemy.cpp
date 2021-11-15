@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "raymath.h"
 
 //intitializer list does not work with derived classes! so no colon behind run_texture and then worldPos(pos)
 Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
@@ -10,26 +11,28 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
     run = run_texture;
     width = texture.width/maxFrames;
     height = texture.height;
+    speed = 3.0f;
 
 }
 
+
 void Enemy::tick(float deltaTime)
 {
-    //set worldPos to worldPosLastFram
-    worldPosLastFrame = worldPos;
+    /*this was the code used before velocity to give enemy AI
+    //get toTarget vector
+    Vector2 toTarget {Vector2Subtract(target->getScreenPos(), screenPos)};
+    //normalize the vector
+    toTarget = Vector2Normalize(toTarget);
+    //multiply vector by a speed variable
+    toTarget = Vector2Scale(toTarget, speed);
+    */
 
-    //update animation
-    runningTime += deltaTime;
-    if (runningTime >= updateTime)
-    {
-        runningTime = 0.0f;
-        //update animation frame
-        frame++;
-        if (frame > maxFrames)
-            frame = 0;
-    }
-    //draw knight
-    Rectangle source{frame * width, 0.0f, rightLeft * width, height};
-    Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
-    DrawTexturePro(texture, source, dest, Vector2{}, 0.0f, WHITE);
+    velocity = {Vector2Subtract(target->getScreenPos(), getScreenPos())};
+    //BaseCharacter::tick(deltaTime);
+   
+}
+
+Vector2 Enemy::getScreenPos()
+{
+    return Vector2Subtract(worldPos, target->getWorldPos());
 }
