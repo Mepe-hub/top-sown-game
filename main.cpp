@@ -4,11 +4,12 @@
 #include "Prop.h"
 #include "Enemy.h"
 #include <string>
+#include <random>
 
 int main()
 {
-    const int windowWidth = 384;
-    const int windowHeight = 384;
+    const int windowWidth = 484;
+    const int windowHeight = 484;
 
     InitWindow(windowWidth, windowHeight, "Classy Clash");
 
@@ -16,18 +17,23 @@ int main()
     Vector2 mapPos{};
     const float mapScale{4.0f};
 
+    //for random float numbers do this once, include random
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<float> distr(100.0f, 1200.0f);
+
     //instance of knight with braced initialization!
     Character knight{windowWidth, windowHeight};
 
     //instance of enemy
     Enemy goblin    {
-                    Vector2{800.0f, 300.0f}, 
+                    Vector2{distr(eng), distr(eng)}, 
                     LoadTexture("characters/goblin_idle_spritesheet.png"), 
                     LoadTexture("characters/goblin_run_spritesheet.png")
                     };
 
     Enemy slime     {
-                    Vector2{500.0f, 700.0f}, 
+                    Vector2{distr(eng), distr(eng)}, 
                     LoadTexture("characters/slime_idle_spritesheet.png"), 
                     LoadTexture("characters/slime_run_spritesheet.png")
                     };
@@ -41,9 +47,11 @@ int main()
     }
 
     //instance of prop
-    Prop props[2]{
+    Prop props[4]{
         Prop {Vector2{600.0f, 300.0f}, LoadTexture("nature_tileset/Rock.png")},
-        Prop {Vector2{400.0f, 700.0f}, LoadTexture("nature_tileset/Log.png")}
+        Prop {Vector2{distr(eng), distr(eng)}, LoadTexture("nature_tileset/Bush.png")},
+        Prop {Vector2{distr(eng), distr(eng)}, LoadTexture("nature_tileset/Sign.png")},
+        Prop {Vector2{distr(eng), distr(eng)}, LoadTexture("nature_tileset/Log.png")}
     };
     //Game loop
     SetTargetFPS(60);
@@ -67,7 +75,7 @@ int main()
         //draw damage to screen
         if(!knight.getAlive())
         {
-            DrawText("Game Over", 55.0f, 45.0f, 40, RED);
+            DrawText("Game Over!", 60.0f, 45.0f, 40, RED);
             EndDrawing();
             continue;
         }
@@ -98,7 +106,7 @@ int main()
         {
             knight.undoMovement();
         }
-        
+
         for(auto prop : props)
         {
             if(CheckCollisionRecs(knight.getCollisionRec(), prop.getCollisionRec(knight.getWorldPos())))

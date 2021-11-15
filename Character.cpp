@@ -41,7 +41,7 @@ void Character::tick(float deltaTime)
     if(rightLeft > 0.0f)
     {
         origin = {0.0f, weapon.height * scale};
-        offSet = {35.0f, 55.0f};
+        offSet = {40.0f, 55.0f};
         weaponCollisionRec = {
             getScreenPos().x + offSet.x,
             getScreenPos().y + offSet.y - weapon.height *scale,
@@ -53,7 +53,7 @@ void Character::tick(float deltaTime)
     else
     {
         origin = {weapon.width * scale, weapon.height * scale};
-        offSet = {25.0f, 50.0f};
+        offSet = {23.0f, 55.0f};
         weaponCollisionRec = {
             getScreenPos().x + offSet.x - weapon.width * scale,
             getScreenPos().y + offSet.y - weapon.height *scale,

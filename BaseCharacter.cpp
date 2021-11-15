@@ -21,6 +21,7 @@ Rectangle BaseCharacter::getCollisionRec()
         height * scale
     };
 }
+
 void BaseCharacter::tick(float deltaTime)
 {
      //set worldPos to worldPosLastFram

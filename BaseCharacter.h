@@ -9,6 +9,7 @@ class BaseCharacter
         Vector2 getWorldPos() { return worldPos; } 
         void undoMovement();
         Rectangle getCollisionRec(); 
+        bool CheckCollision() { return true;}
         //virual function to be overridden by derived classes
         //only virtual in header file, not in cpp file!
         virtual void tick(float deltaTime);
