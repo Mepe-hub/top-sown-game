@@ -14,6 +14,8 @@ class BaseCharacter
         virtual void tick(float deltaTime);
         //pure virtual function because it will only be used in derived classes!!!
         virtual Vector2 getScreenPos() = 0;
+        bool getAlive() { return alive; }
+        void setAlive(bool isAlive) { alive = isAlive;}
     protected:
         Texture2D texture = LoadTexture("characters/knight_idle_spritesheet.png");
         Texture2D idle = LoadTexture("characters/knight_idle_spritesheet.png");
@@ -31,4 +33,6 @@ class BaseCharacter
         float height{};
         float scale{4.0f};
         Vector2 velocity{};
+        private:
+        bool alive = true;
 };

@@ -21,7 +21,8 @@ Vector2 Character::getScreenPos()
 
 void Character::tick(float deltaTime)
 {
-    
+    if(!getAlive()) return;
+
     if (IsKeyDown(KEY_A))
         velocity.x -= 1.0f;
     if (IsKeyDown(KEY_D))
@@ -40,14 +41,14 @@ void Character::tick(float deltaTime)
     if(rightLeft > 0.0f)
     {
         origin = {0.0f, weapon.height * scale};
-        offSet = {35.0f, 50.0f};
+        offSet = {35.0f, 55.0f};
         weaponCollisionRec = {
             getScreenPos().x + offSet.x,
             getScreenPos().y + offSet.y - weapon.height *scale,
             weapon.width * scale,
             weapon.height * scale 
         };
-        rotation = 35.0f;
+        IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? rotation = 35.0f : rotation = 0.0f;
     }
     else
     {
@@ -59,7 +60,7 @@ void Character::tick(float deltaTime)
             weapon.width * scale,
             weapon.height * scale 
         };
-        rotation = -35.0f;
+        IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? rotation = -35.0f : rotation = 0.0f;
     }
 
     //draw the sword with TexturePro
